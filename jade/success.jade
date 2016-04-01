@@ -1,0 +1,12 @@
+block php_header
+  | <?php require_once("../includes/initialize.php"); ?>
+
+block variables
+  - title = "Success"
+extends ./template/public_layout.jade
+block content
+  p You form has been submitted successfully. Please note the below token id for future reference.
+  div(class="card")
+    div(class="card-content")
+      center
+        h3 <?php if(is_numeric($_GET['token'])) echo $_GET['token']; else echo "Invalid token"; ?>

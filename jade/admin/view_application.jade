@@ -1,0 +1,99 @@
+block php_header
+  | <?php require_once("../../includes/initialize.php"); ?>
+  //
+    <?php
+      $result=get_applications($_GET['admission_process_id'],$_GET['token']);
+      $result1=approve($_GET['student_id']);
+      if(isset($_GET["approve"])
+        if($result1==0)
+          set_success("Student Approved");
+        else
+          set_error("Could not approve");
+      else 
+        if(isset($_GET["cancel"])
+          set_error("The application not approved.");
+        else 
+          if(isset($_GET["edit"])
+            set_error("Edit the form.");
+    ?>
+block variables
+  - title = "View Application"
+extends ../template/admin_layout.jade
+block content
+  form(action="view_application.php" method="get")
+    div(class="row")
+      div(class="col s12")
+        | <?php
+        |  $va=mysqli_fetch_assoc($result);
+        |  ?>
+        div(class="card application-form")
+          div(class="card-content")
+            p(class="card-title") 
+              h5(style="color: #222") <?php echo $va['fname']." ".$va['mname']." ".$va['lname']; ?>
+              hr
+              br
+            div(class="row")
+              div(class="col s3")
+                span(class="label") Token Number
+              div(class="col s9")
+                span <?php echo $va['token']; ?>
+            div(class="row")
+              div(class="col s3")
+                span(class="label") College ID 
+              div(class="col s3")
+                span <?php echo $va['college_id']; ?> 
+              div(class="col s2")
+                span(class="label") Year 
+              div(class="col s4")
+                span <?php echo $va['year']; ?>
+            div(class="row") 
+              div(class="col s3")
+                span(class="label") Branch 
+              div(class="col s9")
+                span <?php echo $va['branch_name']; ?> 
+            div(class="row")
+              div(class="col s3")
+                span(class="label") Blood Group
+              div(class="col s3")
+                span <?php echo $va['blood_group']; ?>
+              div(class="col s2")
+                span(class="label") Category
+              div(class="col s4")
+                span <?php echo $va['category_name']; ?>
+            div(class="row")
+              div(class="col s3")
+                span(class="label") Parent Address
+              div(class="col s9")
+                span <?php echo $va['p_address']; ?>
+            div(class="row")
+              div(class="col s3")
+                span(class="label") Parent Contact
+              div(class="col s9")
+                span <?php echo $va['p_contact']; ?>
+            div(class="row")
+              div(class="col s3")
+                span(class="label") Gaurdian Address
+              div(class="col s9")
+                span <?php echo $va['g_address']; ?>
+            div(class="row")
+              div(class="col s3")
+                span(class="label") Gaurdian Contact
+              div(class="col s9")
+                span <?php echo $va['g_contact']; ?>
+            div(class="row")
+              div(class="col s3")
+                span(class="label") Gender
+              div(class="col s3")
+                span <?php if($va['gender']==0) echo "Male"; else echo "Female"; ?>
+              div(class="col s2")
+                span(class="label") PH
+              div(class="col s4")
+                span <?php if($va['ph']==0) echo "No"; else echo "Yes"; ?>
+  form(action="view_application.php" method="GET")    
+    div(class="row")
+      div(class="col s4")
+        button(class="btn waves-effect waves-light light-green lighten-1" type="submit" name="action" value="approve") Approve
+      div(class="col s4")
+        button(class="btn waves-effect waves-light grey" type="submit" name="action" value="cancel") Cancel
+      div(class="col s4")
+        button(class="btn waves-effect waves-light red accent-1" type="submit" name="action" value="edit") Edit

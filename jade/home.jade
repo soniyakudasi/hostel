@@ -1,0 +1,14 @@
+block php_header
+  | <?php require_once("../includes/initialize.php"); ?>
+block variables
+  - title = "Home"
+extends ./template/public_layout.jade
+block content
+  div(class="card")
+    div(class="card-image")
+      img(src="images/one.jpg")
+      span(class="card-title") Card Title
+    div(class="card-content")
+      p News and updates.
+    div(class="card-action")
+      a(href="#") This is a link      

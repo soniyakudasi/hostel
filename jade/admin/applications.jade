@@ -1,0 +1,52 @@
+block php_header
+  | <?php require_once("../../includes/initialize.php"); ?>
+  //
+    <?php
+    $result=null;
+      $ad_process=get_admission_process();
+      if(mysqli_num_rows($ad_process) >= 1){
+        if($_GET['submit']=='fetch'){
+          if($_GET['token']==""){
+          $result=get_applications($_GET['admission_process_id']);
+        }
+        else{
+        $result=get_applications($_GET['admission_process_id'],$_GET['token']);
+      }
+      }
+    }
+      else
+        set_error("No admission process found. <a href=\"new_admission_process.php\">Click here</a> to create one.");
+      ?>
+block variables
+  - title = "Applications"
+extends ../template/admin_layout.jade
+block content
+  form(action="applications.php" method="get")
+    div(class="row")
+      div(class="input-field col s4")
+        select(id="admission_process_id" name="admission_process_id")
+          | <?php
+          |  while($ap=mysqli_fetch_assoc($ad_process))
+          |    echo "<option value=\"{$ap['id']}\">{$ap['academic_year']}</option>";
+          |  ?>
+        label(for="admission_process_id") Academic year
+      div(class="input-field col s4")
+        input(placeholder="Optional" id="token" name="token" type="text" class="validate")
+        label(for="token") Token
+      div(class="col s4")
+        br
+        button(class="btn waves-effect waves-light" type="submit" value="fetch" name="submit") Fetch
+    div(class="row")
+      div(class="col s12")
+        | <?php
+        | if($result!=null and mysqli_num_rows($result)>=1){
+        |  echo "<h6>Following is the result</h6>";
+        | echo "<table class=\"striped\">";
+        | echo "<thead><tr><th>Token</th><th>College ID</th><th>Full name</th><th>Actions</th></tr></thead>";
+        | echo "<tbody>";
+        |   while($row=mysqli_fetch_assoc($result)){
+        |      echo "<tr><td>{$row['token']}</td><td>{$row['college_id']}</td><td>{$row['fname']} {$row['mname']} {$row['lname']}</td><td><a href=\"view_application.php?token={$row['token']}&admission_process_id={$row['admission_process_id']}\">View</a></td></tr>";
+        | }
+        | echo "</tbody></table>";
+        | }
+        | ?>

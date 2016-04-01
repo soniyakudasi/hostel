@@ -1,0 +1,38 @@
+body {
+  background-color: #fff;
+}
+#header #header-col {
+  padding: 0px;
+}
+#content {
+  min-height: 800px;
+}
+#main-nav {
+  background-color: #1d2120;
+}
+#brand-title {
+  color: #fff;
+}
+#content h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #ba9077;
+}
+#footer {
+  margin-bottom: 0px;
+  background-color: #e6e6e6;
+  border-top: #666666;
+}
+.application-form span {
+  font-weight: normal;
+  padding: 5px;
+  display: block;
+  border: solid 1px #cccccc;
+}
+.application-form span.label {
+  font-weight: bold;
+  border: none;
+}

@@ -1,0 +1,49 @@
+@alpha: #1d2120;
+@beta: #ba9077;
+@gamma: #bcd5d1;
+
+@base-light: #fff;
+@base-dark: #222;
+
+body{
+  background-color: @base-light;
+}
+
+#header #header-col{
+  padding: 0px;
+}
+
+#content{
+  min-height: 800px;
+}
+
+#main-nav{
+  background-color: lighten(@alpha, 0%);
+}
+
+#brand-title{
+  color: @base-light;
+}
+
+#content h1,h2,h3,h4,h5,h6{
+  color: @beta;
+}
+
+#footer{
+  margin-bottom: 0px;
+  background-color: darken(@base-light, 10%);
+  border-top: darken(@base-light, 60%);
+}
+
+
+.application-form span{
+  font-weight: normal;
+  padding: 5px;
+  display: block;
+  border: solid 1px darken(@base-light, 20%);
+}
+
+.application-form span.label{
+  font-weight: bold;
+  border:none;
+}
