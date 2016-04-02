@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: hostel
 -- ------------------------------------------------------
--- Server version	5.5.47-0ubuntu0.14.04.1
+-- Server version	5.5.47-0ubuntu0.12.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -54,7 +54,7 @@ CREATE TABLE `tbl_admission_process` (
   `academic_year` varchar(9) DEFAULT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +63,7 @@ CREATE TABLE `tbl_admission_process` (
 
 LOCK TABLES `tbl_admission_process` WRITE;
 /*!40000 ALTER TABLE `tbl_admission_process` DISABLE KEYS */;
-INSERT INTO `tbl_admission_process` VALUES (8,'2015-2016',0),(9,'2016-2017',0);
+INSERT INTO `tbl_admission_process` VALUES (8,'2015-2016',0);
 /*!40000 ALTER TABLE `tbl_admission_process` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,7 +102,7 @@ CREATE TABLE `tbl_categories` (
   `id` int(2) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,7 +111,7 @@ CREATE TABLE `tbl_categories` (
 
 LOCK TABLES `tbl_categories` WRITE;
 /*!40000 ALTER TABLE `tbl_categories` DISABLE KEYS */;
-INSERT INTO `tbl_categories` VALUES (1,'open'),(2,'obc'),(3,'sc'),(4,'st'),(5,'nt1'),(6,'nt2'),(7,'nt3');
+INSERT INTO `tbl_categories` VALUES (1,'open'),(2,'obc'),(3,'sc');
 /*!40000 ALTER TABLE `tbl_categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,13 +196,13 @@ CREATE TABLE `tbl_students` (
   `is_valid` tinyint(4) NOT NULL,
   `profile_pic` varchar(20) DEFAULT NULL,
   `cgpa` float(4,2) NOT NULL,
-  `flag` tinyint(1) DEFAULT NULL,
+  `is_alloted` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `branch_id` (`branch_id`),
   KEY `category` (`category`),
   CONSTRAINT `tbl_students_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `tbl_branches` (`id`),
   CONSTRAINT `tbl_students_ibfk_2` FOREIGN KEY (`category`) REFERENCES `tbl_categories` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,7 +211,7 @@ CREATE TABLE `tbl_students` (
 
 LOCK TABLES `tbl_students` WRITE;
 /*!40000 ALTER TABLE `tbl_students` DISABLE KEYS */;
-INSERT INTO `tbl_students` VALUES (11,'11105004','Sagar','Krishnakumar','Udasi','O-',2,'Plot no 1, Sane guruji nagar 2, Sainagar, Amravati',2147483647,NULL,0,'Plot no 2, Sane guruji nagar 2, Sainagar, Amravati',2147483647,2,4,0,0,0,NULL,0.00,NULL),(12,'14107010','Soniya','Krishnakumar','Udasi','A-',2,'sainagar, amravati',2147483647,NULL,0,'sainagar,amravati',2147483647,7,3,1,0,0,NULL,0.00,NULL);
+INSERT INTO `tbl_students` VALUES (11,'11105004','Sagar','Krishnakumar','Udasi','O-',2,'Plot no 1, Sane guruji nagar 2, Sainagar, Amravati',2147483647,NULL,0,'Plot no 2, Sane guruji nagar 2, Sainagar, Amravati',2147483647,2,4,0,0,0,NULL,0.00,NULL),(12,'14107010','Soniya','Krishnakumar','Udasi','A-',2,'sainagar, amravati',2147483647,NULL,0,'sainagar,amravati',2147483647,7,3,1,0,0,NULL,0.00,NULL),(13,'14107022','Pooja ','Gajanan','Pundkar','AB+',1,'akot',898655456,NULL,0,'akot',786545479,5,3,1,0,0,NULL,0.00,NULL),(14,'14107028','Shubham','Arvind','Maraskohle','A+',1,'Nagpur',886565354,NULL,0,'Nagpur',2147483647,4,4,0,0,0,NULL,0.00,NULL),(15,'14107031','Neha','Jivan','Kotwal','B+',2,'Daryapur',2147483647,NULL,0,'Daryapur',2147483647,1,2,1,0,0,NULL,0.00,NULL),(16,'14107007','Vishakha','Mohan','Telgote','B+',3,'Rahatgaon',2147483647,NULL,0,'Rahatgaon',2147483647,3,2,1,0,0,NULL,0.00,NULL);
 /*!40000 ALTER TABLE `tbl_students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,7 +231,7 @@ CREATE TABLE `tbl_tokens` (
   UNIQUE KEY `token` (`token`),
   KEY `admission_process_id` (`admission_process_id`),
   CONSTRAINT `tbl_tokens_ibfk_1` FOREIGN KEY (`admission_process_id`) REFERENCES `tbl_admission_process` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=217 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=222 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -240,7 +240,7 @@ CREATE TABLE `tbl_tokens` (
 
 LOCK TABLES `tbl_tokens` WRITE;
 /*!40000 ALTER TABLE `tbl_tokens` DISABLE KEYS */;
-INSERT INTO `tbl_tokens` VALUES (207,'974451966',8,11),(208,'162944378',8,12),(209,'141394215',8,NULL),(210,'535244051',8,NULL),(211,'478029166',8,NULL),(212,'81828197',9,NULL),(213,'640649755',9,NULL),(214,'115043201',9,NULL),(215,'711093394',9,NULL),(216,'668866754',9,NULL);
+INSERT INTO `tbl_tokens` VALUES (207,'974451966',8,11),(208,'162944378',8,12),(209,'141394215',8,13),(210,'535244051',8,14),(211,'478029166',8,15),(212,'524823620',8,16),(213,'824558743',8,NULL),(214,'946028823',8,NULL),(215,'755955371',8,NULL),(216,'370152400',8,NULL),(217,'297396914',8,NULL),(218,'236636976',8,NULL),(219,'684548415',8,NULL),(220,'615513304',8,NULL),(221,'665153703',8,NULL);
 /*!40000 ALTER TABLE `tbl_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -253,4 +253,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-01 12:24:30
+-- Dump completed on 2016-04-01 18:53:40

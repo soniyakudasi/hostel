@@ -3,18 +3,18 @@ block php_header
   //
     <?php
       $result=get_applications($_GET['admission_process_id'],$_GET['token']);
-      $result1=approve($_GET['student_id']);
-      if(isset($_GET["approve"])
-        if($result1==0)
-          set_success("Student Approved");
-        else
-          set_error("Could not approve");
-      else 
-        if(isset($_GET["cancel"])
-          set_error("The application not approved.");
-        else 
-          if(isset($_GET["edit"])
-            set_error("Edit the form.");
+      if(isset($_GET['action'])){
+        if($_GET['action']=='edit')
+          header("Location: edit.php?token={$_GET['token']}&admission_process_id={$_GET['admission_process_id']}");
+        if($_GET['action']=='approve'){
+          $r=approve($_GET['admission_process_id'],$_GET['token']);
+          $result=get_applications($_GET['admission_process_id'],$_GET['token']);
+      }
+      if($_GET['action']=='cancel')
+        header("Location: applications.php?admission_process_id={$_GET['admission_process_id']}&token={$_GET['token']}&submit=fetch");
+          
+          
+      }
     ?>
 block variables
   - title = "View Application"
@@ -82,6 +82,11 @@ block content
                 span <?php echo $va['g_contact']; ?>
             div(class="row")
               div(class="col s3")
+                span(class="label") Date of birth
+              div(class="col s9")
+                span <?php echo $va['dob']; ?>
+            div(class="row")
+              div(class="col s3")
                 span(class="label") Gender
               div(class="col s3")
                 span <?php if($va['gender']==0) echo "Male"; else echo "Female"; ?>
@@ -89,11 +94,23 @@ block content
                 span(class="label") PH
               div(class="col s4")
                 span <?php if($va['ph']==0) echo "No"; else echo "Yes"; ?>
+            div(class="row")
+              div(class="col s3")
+                span(class="label") CGPA: CY
+              div(class="col s3")
+                span <?php echo $va['exam_curr']; ?>
+              div(class="col s2")
+                span(class="label") CGPA: LY
+              div(class="col s4")
+                span <?php echo $va['exam_last']; ?>
   form(action="view_application.php" method="GET")    
     div(class="row")
-      div(class="col s4")
-        button(class="btn waves-effect waves-light light-green lighten-1" type="submit" name="action" value="approve") Approve
-      div(class="col s4")
+      div(class="col s12")
+        | <?php echo "<input type=\"hidden\" value=\"{$va['token']}\" name=\"token\">"; ?>
+        | <?php echo "<input type=\"hidden\" value=\"{$_GET['admission_process_id']}\" name=\"admission_process_id\">"; ?>
+        | <?php if($va['is_valid']==0) echo '<button type="submit" name="action" value="approve" class="btn waves-effect waves-light light-green lighten-1">Approve</button>'; ?>
+        | <?php if($va['is_valid']==1) echo '<button type="submit" name="action" value="approve" class="btn waves-effect waves-light light-green lighten-1 disabled" disabled>Already approved</button>'; ?>
         button(class="btn waves-effect waves-light grey" type="submit" name="action" value="cancel") Cancel
-      div(class="col s4")
-        button(class="btn waves-effect waves-light red accent-1" type="submit" name="action" value="edit") Edit
+        | <?php if($va['is_valid']==0) echo '<button type="submit" name="action" value="edit" class="btn waves-effect waves-light red accent-1">Edit</button>'; ?>
+        | <?php if($va['is_valid']==1) echo '<button type="submit" name="action" value="edit" class="btn waves-effect waves-light red accent-1 disabled" disabled>Edit</button>'; ?>
+        

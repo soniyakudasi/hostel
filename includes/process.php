@@ -47,4 +47,37 @@ function generate_save_tokens($admission_process_id,$count){
   return 0;
 }
 
+function approve($admission_process_id,$token){
+  global $conn;
+  $student=get_applications($admission_process_id, $token);
+  $student=mysqli_fetch_assoc($student);
+  //var_dump($student);
+  return mysqli_query($conn,"update tbl_students set is_valid=1 where id={$student['student_id']}");
+}
+
+function rank_students($admission_process_id){
+  global $conn;
+  for($i=1;$i<=4;$i++){
+    $brank=0;
+    $grank=0;
+    $arank=0;
+    $order_query="select tbl_students.id, token, fname, lname, gender, exam_curr, exam_last, dob, rank, is_alloted from tbl_tokens inner join tbl_students on tbl_tokens.student_id=tbl_students.id inner join tbl_branches on tbl_branches.id=tbl_students.branch_id inner join tbl_categories on tbl_categories.id=tbl_students.category where admission_process_id={$admission_process_id} and year={$i} and student_id is not null and is_valid=1 and is_alloted is null order by exam_curr desc, exam_last desc, dob desc";
+    $result=mysqli_query($conn,$order_query);
+    while($row=mysqli_fetch_assoc($result)){
+      if($row['gender']==0){
+        $brank+=1;
+        $arank=$brank;
+      }else{
+        $grank+=1;
+        $arank=$grank;
+      }
+      $query="update tbl_students set rank={$arank} where id={$row['id']}";
+      mysqli_query($conn,$query);
+    }
+  }
+  $order_query="select tbl_students.id, college_id, token, fname, mname, lname, gender, exam_curr, exam_last, dob, rank, is_alloted, year from tbl_tokens inner join tbl_students on tbl_tokens.student_id=tbl_students.id inner join tbl_branches on tbl_branches.id=tbl_students.branch_id inner join tbl_categories on tbl_categories.id=tbl_students.category where admission_process_id={$admission_process_id} and student_id is not null and is_valid=1 and is_alloted is null order by year, gender, rank";
+  $result=mysqli_query($conn,$order_query);
+  return $result;
+}
+
 ?>

@@ -1,8 +1,13 @@
 block php_header
-  | <?php require_once("../includes/initialize.php"); ?>
+  | <?php require_once("../../includes/initialize.php"); ?>
   //
     <?php
       $ap = get_open_admission_process();
+      $student = get_applications($_GET['admission_process_id'],$_GET['token']);
+      if(mysqli_num_rows($student)==1){
+        $student=mysqli_fetch_assoc($student);
+      }
+        
       if(mysqli_num_rows($ap)==1){
       $ap=mysqli_fetch_assoc($ap);
       
@@ -20,33 +25,33 @@ block php_header
       }
     ?>
 block variables
-  - title = "Apply"
-extends ./template/public_layout.jade
+  - title = "Edit form"
+extends ../template/admin_layout.jade
 block content
-  p If you do not have token id, please visit co-operative store to get token.
   form(action="apply.php" method="post") 
     div(class="card")
       div(class="card-content")
         span(class="card-title")
           h6 Admission form for academic year <?php echo "<b>{$ap['academic_year']}</b>"; ?> 
         | <?php echo "<input type=\"hidden\" value=\"{$ap['id']}\" name=\"admission_process_id\">"; ?>
+        | <?php echo "<input type=\"hidden\" value=\"{$student['id']}\" name=\"id\">"; ?>
         div(class="row")
           div(class="input-field col s12")
-            input(id="token" name="token" type="text" class="validate" required)
+            | <?php echo '<input id="token" name="token" type="text" value="'.$student['token'].'" required disabled class="validate">'; ?>
             label(for="token") Token ID
         div(class="row")
           div(class="input-field col s4")
-            input(id="fname" name="fname" type="text" class="validate" required)
+            | <?php echo '<input id="fname" name="fname" type="text" required value="'.$student['fname'].'" class="validate">'; ?>
             label(for="fname") First Name
           div(class="input-field col s4")
-            input(id="mname" name="mname" type="text" class="validate" required)
+            | <?php echo '<input id="mname" name="mname" type="text" required value="'.$student['mname'].'" class="validate">'; ?>
             label(for="mname") Middle Name
           div(class="input-field col s4")
-            input(id="lname" name="lname" type="text" class="validate" required)
+            | <?php echo '<input id="lname" name="lname" type="text" required value="'.$student['lname'].'" class="validate">'; ?>
             label(for="lname") Last Name
         div(class="row")
           div(class="input-field col s4")
-            input(id="college_id" name="college_id" type="text" class="validate" required)
+            | <?php echo '<input id="college_id" name="college_id" type="text" value="'.$student['college_id'].'" required class="validate">'; ?>
             label(for="college_id") College ID
           div(class="input-field col s4")
             select(name="branch_id" required) 
@@ -97,33 +102,33 @@ block content
         br
         div(class="row")
           div(class="input-field col12")
-            input(name="dob" type="text" id="dob" required)
+            | <?php echo '<input name="dob" type="text" value="'.$student['dob'].'" id="dob" required>'; ?>
             label(for="dob") Date of birth (yyyy-mm-dd)
         div(class="row")
           div(class="input-field col12")
-            input(type="text" name="exam_curr" class="materialize-textarea" required)
+            | <?php echo '<input type="text" name="exam_curr" required value="'.$student['exam_curr'].'" class="materialize-textarea">'; ?>
             label(for="exam_curr") CGPA: Current year
         div(class="row")
           div(class="input-field col12")
-            input(type="text" name="exam_last" class="materialize-textarea" required)
+            | <?php echo '<input type="text" name="exam_last" required value="'.$student['exam_last'].'" class="materialize-textarea">'; ?>
             label(for="exam_last") CGPA: Last year
         br
         div(class="row")
           div(class="input-field col12")
-            textarea(id="p_address" name="p_address" class="materialize-textarea" required)
+            | <?php echo '<textarea id="p_address" name="p_address" required class="materialize-textarea">'.$student['p_address'].'</textarea>'; ?>
             label(for="p_address") Parent Address
         div(class="row")
           div(class="input-field col12")
-            input(id="p_contact" name="p_contact" type="tel" class="validate" required)
             label(for="p_contact") Parent Contact
+            | <?php echo '<input id="p_contact" name="p_contact" type="tel" required value="'.$student['p_contact'].'" class="validate">'; ?>
         br
         div(class="row")
           div(class="input-field col12")
-            textarea(id="g_address" name="g_address" class="materialize-textarea" required)
+            | <?php echo '<textarea id="g_address" name="g_address" required class="materialize-textarea">'.$student['g_address'].'</textarea>'; ?>
             label(for="g_address") Gaurdian Address
         div(class="row")
           div(class="input-field col12")
-            input(id="g_contact" name="g_contact" type="tel" class="validate" required)
+            | <?php echo '<input id="g_contact" name="g_contact" type="tel" required value="'.$student['g_contact'].'" class="validate">'; ?>
             label(for="g_contact") Gaurdian Contact
         div(class="row")
           div(class="input-field col12")

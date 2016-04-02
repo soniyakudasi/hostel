@@ -1,0 +1,29 @@
+block php_header
+  | <?php require_once("../../includes/initialize.php"); ?>
+  //
+    <?php
+      $students=null;
+      $students=rank_students($_GET['admission_process_id']);
+      ?>
+block variables
+  - title = "Rank"
+extends ../template/admin_layout.jade
+block content
+  table(class="striped")
+    thead
+      tr
+        th Rank
+        th College Id
+        th Full name
+        th Year
+        th CGPA CY
+        th CGPA PY
+        th DOB
+    tbody
+      | <?php
+      |   while($s=mysqli_fetch_assoc($students)){
+      |     echo "<tr><td>{$s['rank']}</td><td>{$s['college_id']}</td><td>{$s['fname']} {$s['mname']} {$s['lname']}</td><td>{$s['year']}</td><td>{$s['exam_curr']}</td><td>{$s['exam_last']}</td><td>{$s['dob']}</td></tr>";
+      |   }
+      | ?>
+      
+        

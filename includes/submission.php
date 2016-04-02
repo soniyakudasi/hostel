@@ -18,8 +18,8 @@
     $student['fname']=mysqli_escape_string($conn,$student['fname']);
     $student['ph']=isset($student['ph'])?mysqli_escape_string($conn,$student['ph']):0;
     //save student info in database and get the inserted id
-    $stmt=mysqli_prepare($conn,"insert into tbl_students(college_id,fname,mname,lname,blood_group,category,p_address,p_contact,g_address,g_contact,branch_id,year,gender,cgpa,ph) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-    mysqli_stmt_bind_param($stmt,"sssssisisiiiifi",$student['college_id'],$student['fname'],$student['mname'],$student['lname'],$student['blood_group'],$student['category'],$student['p_address'],$student['p_contact'],$student['g_address'],$student['g_contact'],$student['branch_id'],$student['year'],$student['gender'],$student['cgpa'],$student['ph']);
+    $stmt=mysqli_prepare($conn,"insert into tbl_students(college_id,fname,mname,lname,blood_group,category,p_address,p_contact,g_address,g_contact,branch_id,year,gender,ph,exam_curr,exam_last,dob) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    mysqli_stmt_bind_param($stmt,"sssssisisiiiiidds",$student['college_id'],$student['fname'],$student['mname'],$student['lname'],$student['blood_group'],$student['category'],$student['p_address'],$student['p_contact'],$student['g_address'],$student['g_contact'],$student['branch_id'],$student['year'],$student['gender'],$student['ph'],$student['exam_curr'],$student['exam_last'],$student['dob']);
     $result=mysqli_stmt_execute($stmt);
     if(!$result){
       set_error("Some error occured while executing database statement");
@@ -62,13 +62,4 @@
     return $result;
   }
 
-  function approve($student_id)
-  {
-    global $conn;
-    $app=mysqli_escape_string($conn,$student_id);
-    $query="update table tbl_students set is_valid=1 where student_id={$app}";
-    $result=mysqli_query($conn,$query);
-    return $result;
-
-  }
  ?>

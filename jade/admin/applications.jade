@@ -42,10 +42,12 @@ block content
         | if($result!=null and mysqli_num_rows($result)>=1){
         |  echo "<h6>Following is the result</h6>";
         | echo "<table class=\"striped\">";
-        | echo "<thead><tr><th>Token</th><th>College ID</th><th>Full name</th><th>Actions</th></tr></thead>";
+        | echo "<thead><tr><th>Token</th><th>College ID</th><th>Full name</th><th>Status</th><th>Actions</th></tr></thead>";
         | echo "<tbody>";
         |   while($row=mysqli_fetch_assoc($result)){
-        |      echo "<tr><td>{$row['token']}</td><td>{$row['college_id']}</td><td>{$row['fname']} {$row['mname']} {$row['lname']}</td><td><a href=\"view_application.php?token={$row['token']}&admission_process_id={$row['admission_process_id']}\">View</a></td></tr>";
+        |      $status="";
+        |      if($row['is_valid']==1) $status="Approved"; 
+        |      echo "<tr><td>{$row['token']}</td><td>{$row['college_id']}</td><td>{$row['fname']} {$row['mname']} {$row['lname']}</td><td>{$status}</td><td><a href=\"view_application.php?token={$row['token']}&admission_process_id={$row['admission_process_id']}\">View</a></td></tr>";
         | }
         | echo "</tbody></table>";
         | }

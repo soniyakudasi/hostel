@@ -2,18 +2,18 @@
 <!--
 <?php
   $result=get_applications($_GET['admission_process_id'],$_GET['token']);
-  $result1=approve($_GET['student_id']);
-  if(isset($_GET["approve"])
-    if($result1==0)
-      set_success("Student Approved");
-    else
-      set_error("Could not approve");
-  else 
-    if(isset($_GET["cancel"])
-      set_error("The application not approved.");
-    else 
-      if(isset($_GET["edit"])
-        set_error("Edit the form.");
+  if(isset($_GET['action'])){
+    if($_GET['action']=='edit')
+      header("Location: edit.php?token={$_GET['token']}&admission_process_id={$_GET['admission_process_id']}");
+    if($_GET['action']=='approve'){
+      $r=approve($_GET['admission_process_id'],$_GET['token']);
+      $result=get_applications($_GET['admission_process_id'],$_GET['token']);
+  }
+  if($_GET['action']=='cancel')
+    header("Location: applications.php?admission_process_id={$_GET['admission_process_id']}&token={$_GET['token']}&submit=fetch");
+      
+      
+  }
 ?>
 --><!DOCTYPE html>
 <html>
@@ -100,10 +100,20 @@
                         <div class="col s9"><span><?php echo $va['g_contact']; ?></span></div>
                       </div>
                       <div class="row">
+                        <div class="col s3"><span class="label">Date of birth</span></div>
+                        <div class="col s9"><span><?php echo $va['dob']; ?></span></div>
+                      </div>
+                      <div class="row">
                         <div class="col s3"><span class="label">Gender</span></div>
                         <div class="col s3"><span><?php if($va['gender']==0) echo "Male"; else echo "Female"; ?></span></div>
                         <div class="col s2"><span class="label">PH</span></div>
                         <div class="col s4"><span><?php if($va['ph']==0) echo "No"; else echo "Yes"; ?></span></div>
+                      </div>
+                      <div class="row">
+                        <div class="col s3"><span class="label">CGPA: CY</span></div>
+                        <div class="col s3"><span><?php echo $va['exam_curr']; ?></span></div>
+                        <div class="col s2"><span class="label">CGPA: LY</span></div>
+                        <div class="col s4"><span><?php echo $va['exam_last']; ?></span></div>
                       </div>
                     </div>
                   </div>
@@ -112,14 +122,13 @@
             </form>
             <form action="view_application.php" method="GET">   
               <div class="row">
-                <div class="col s4">
-                  <button type="submit" name="action" value="approve" class="btn waves-effect waves-light light-green lighten-1">Approve</button>
-                </div>
-                <div class="col s4">
-                  <button type="submit" name="action" value="cancel" class="btn waves-effect waves-light grey">Cancel</button>
-                </div>
-                <div class="col s4">
-                  <button type="submit" name="action" value="edit" class="btn waves-effect waves-light red accent-1">Edit</button>
+                <div class="col s12">
+                  <?php echo "<input type=\"hidden\" value=\"{$va['token']}\" name=\"token\">"; ?>
+                  <?php echo "<input type=\"hidden\" value=\"{$_GET['admission_process_id']}\" name=\"admission_process_id\">"; ?>
+                  <?php if($va['is_valid']==0) echo '<button type="submit" name="action" value="approve" class="btn waves-effect waves-light light-green lighten-1">Approve</button>'; ?>
+                  <?php if($va['is_valid']==1) echo '<button type="submit" name="action" value="approve" class="btn waves-effect waves-light light-green lighten-1 disabled" disabled>Already approved</button>'; ?>
+                  <button type="submit" name="action" value="cancel" class="btn waves-effect waves-light grey">Cancel</button><?php if($va['is_valid']==0) echo '<button type="submit" name="action" value="edit" class="btn waves-effect waves-light red accent-1">Edit</button>'; ?>
+                  <?php if($va['is_valid']==1) echo '<button type="submit" name="action" value="edit" class="btn waves-effect waves-light red accent-1 disabled" disabled>Edit</button>'; ?>
                 </div>
               </div>
             </form>
