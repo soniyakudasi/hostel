@@ -13,7 +13,7 @@
     <script type="text/javascript" src="js/main.js"></script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jijau Girls Hostel :: GCOEA Hostel</title>
+    <title>Home :: GCOEA Hostel</title>
   </head>
   <body>
     <div id="header" class="row">
@@ -36,8 +36,14 @@
       <div id="content-wrapper" class="container">
         <div class="row">
           <div id="content" class="col s8">
-            <h4>Jijau Girls Hostel</h4><?php print_message(); ?>
-            <p>Year of Establishment: 1994<br>Intake capacity: 160<br>Strength: 160</p>
+            <h4>Home</h4><?php print_message(); ?>
+            <div class="card">
+              <div class="card-image"><img src="images/one.jpg"><span class="card-title">Card Title</span></div>
+              <div class="card-content">
+                <p>News and updates.</p>
+              </div>
+              <div class="card-action"><a href="#">This is a link      </a></div>
+            </div>
           </div>
           <div id="right-sidebar" class="col s4">
             <ul class="collection with-header">

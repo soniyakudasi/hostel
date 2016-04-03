@@ -4,5 +4,5 @@
   require_once("functions.php");
   require_once("process.php");
   require_once("submission.php");
-  require_once("result.php");
+  //require_once("result.php");
  ?>

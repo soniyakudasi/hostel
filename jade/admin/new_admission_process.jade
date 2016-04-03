@@ -43,7 +43,7 @@ block content
             |  }
             |   else{
             |     while($a=mysqli_fetch_assoc($aps)){
-            |      echo "<tr><td>{$a['id']}</td><td>{$a['academic_year']}</td><td>{$a['status']}</td><td><a href=\"rank.php?admission_process_id={$a['id']}&action=togglestatus\">Rank</a> | <a href=\"new_admission_process.php?id={$a['id']}&action=togglestatus\">Close</a></td></tr>"; 
+            |      echo "<tr><td>{$a['id']}</td><td>{$a['academic_year']}</td><td>{$a['status']}</td><td><a href=\"misc.php?admission_process_id={$a['id']}&action=reset\">Reset</a> | <a href=\"rank.php?admission_process_id={$a['id']}&action=togglestatus\">Rank</a> | <a href=\"result.php?admission_process_id={$a['id']}&action=togglestatus\">Result</a> | <a href=\"new_admission_process.php?id={$a['id']}&action=togglestatus\">Close</a></td></tr>"; 
             |   }
             |  } 
             | ?>

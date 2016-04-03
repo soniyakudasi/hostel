@@ -22,7 +22,7 @@
           <div class="nav-wrapper">
             <div class="col s12"><a href="#" class="brand-logo">GCOEA Hostels</a>
               <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="home.php">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li><a href="news_updates.php">News & Updates</a></li>
                 <li><a href="admission.php">Admission</a></li>
                 <li><a href="apply.php">Apply</a></li>

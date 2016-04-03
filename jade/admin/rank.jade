@@ -22,6 +22,7 @@ block content
     tbody
       | <?php
       |   while($s=mysqli_fetch_assoc($students)){
+      |     
       |     echo "<tr><td>{$s['rank']}</td><td>{$s['college_id']}</td><td>{$s['fname']} {$s['mname']} {$s['lname']}</td><td>{$s['year']}</td><td>{$s['exam_curr']}</td><td>{$s['exam_last']}</td><td>{$s['dob']}</td></tr>";
       |   }
       | ?>

@@ -1,0 +1,32 @@
+block php_header
+  | <?php require_once("../../includes/initialize.php"); ?>
+  //
+    <?php
+      $students=null;
+      $students=admit_students($_GET['admission_process_id']);
+      ?>
+block variables
+  - title = "Result"
+extends ../template/admin_layout.jade
+block content
+  table(class="striped")
+    thead
+      tr
+        th Rank
+        th College Id
+        th Full name
+        th Year
+        th Alloted
+        th Quota
+    tbody
+      | <?php
+      |   while($s=mysqli_fetch_assoc($students)){
+      |     $alloted="<span style=\"color: #800;\">No</span>";
+      |     if($s['is_alloted']==1){
+      |       $alloted="<span style=\"color: #0a0;\">Yes</span>";
+      |    }
+      |     echo "<tr><td>{$s['rank']}</td><td>{$s['college_id']}</td><td>{$s['fname']} {$s['mname']} {$s['lname']}</td><td>{$s['year']}</td><td>{$alloted}</td><td>{$s['alloted_under_quota']}</td></tr>";
+      |   }
+      | ?>
+      
+        

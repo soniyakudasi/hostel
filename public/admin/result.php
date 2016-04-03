@@ -53,7 +53,13 @@ function http_digest_parse($txt)
 }
 ?>
 
---><?php require_once("../../includes/initialize.php"); ?><!DOCTYPE html>
+--><?php require_once("../../includes/initialize.php"); ?>
+<!--
+<?php
+  $students=null;
+  $students=admit_students($_GET['admission_process_id']);
+  ?>
+--><!DOCTYPE html>
 <html>
   <head>
     <!--Import Google Icon Font-->
@@ -68,7 +74,7 @@ function http_digest_parse($txt)
     <script type="text/javascript" src="../js/main.js"></script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home :: GCOEA Hostel</title>
+    <title>Result :: GCOEA Hostel</title>
   </head>
   <body>
     <div id="header" class="row">
@@ -88,8 +94,30 @@ function http_digest_parse($txt)
       <div id="content-wrapper" class="container">
         <div class="row">
           <div id="content" class="col s8">
-            <h4>Admin :: Home</h4><?php print_message(); ?>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <h4>Admin :: Result</h4><?php print_message(); ?>
+            <table class="striped">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>College Id</th>
+                  <th>Full name</th>
+                  <th>Year</th>
+                  <th>Alloted</th>
+                  <th>Quota</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                  while($s=mysqli_fetch_assoc($students)){
+                    $alloted="<span style=\"color: #800;\">No</span>";
+                    if($s['is_alloted']==1){
+                      $alloted="<span style=\"color: #0a0;\">Yes</span>";
+                   }
+                    echo "<tr><td>{$s['rank']}</td><td>{$s['college_id']}</td><td>{$s['fname']} {$s['mname']} {$s['lname']}</td><td>{$s['year']}</td><td>{$alloted}</td><td>{$s['alloted_under_quota']}</td></tr>";
+                  }
+                ?>
+              </tbody>
+            </table>
           </div>
           <div id="right-sidebar" class="col s4">
             <ul class="collection with-header">

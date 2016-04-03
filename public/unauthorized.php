@@ -13,7 +13,7 @@
     <script type="text/javascript" src="js/main.js"></script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home :: GCOEA Hostel</title>
+    <title>Unauthorized :: GCOEA Hostel</title>
   </head>
   <body>
     <div id="header" class="row">
@@ -22,7 +22,7 @@
           <div class="nav-wrapper">
             <div class="col s12"><a href="#" class="brand-logo">GCOEA Hostels</a>
               <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="home.php">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li><a href="news_updates.php">News & Updates</a></li>
                 <li><a href="admission.php">Admission</a></li>
                 <li><a href="apply.php">Apply</a></li>
@@ -36,14 +36,8 @@
       <div id="content-wrapper" class="container">
         <div class="row">
           <div id="content" class="col s8">
-            <h4>Home</h4><?php print_message(); ?>
-            <div class="card">
-              <div class="card-image"><img src="images/one.jpg"><span class="card-title">Card Title</span></div>
-              <div class="card-content">
-                <p>News and updates.</p>
-              </div>
-              <div class="card-action"><a href="#">This is a link      </a></div>
-            </div>
+            <h4>Unauthorized</h4><?php print_message(); ?>
+            <p>Invalid username or password.</p>
           </div>
           <div id="right-sidebar" class="col s4">
             <ul class="collection with-header">
