@@ -26,6 +26,7 @@
                 <li><a href="news_updates.php">News & Updates</a></li>
                 <li><a href="admission.php">Admission</a></li>
                 <li><a href="apply.php">Apply</a></li>
+                <li><a href="result.php">Result</a></li>
                 <li><a href="rules.php">Hostel Rules</a></li>
                 <li><a href="admin/home.php">Admin Login    </a></li>
               </ul>

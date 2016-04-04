@@ -144,7 +144,7 @@ function admit_students($admission_process_id){
 
 function reset_admission($admission_process_id){
   global $conn;
-  $query="update tbl_students set is_alloted=NULL, rank=0";
+  $query="update tbl_students set is_alloted=NULL, rank=0, alloted_under_quota=NULL";
   $query3="update tbl_admission_process set result=0 where id={$admission_process_id}";
   mysqli_query($conn,$query);
   mysqli_query($conn,$query3);

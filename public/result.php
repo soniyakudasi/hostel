@@ -1,4 +1,12 @@
-<?php require_once("../includes/initialize.php"); ?><!DOCTYPE html>
+<?php require_once("../includes/initialize.php"); ?>
+<!--
+<?php
+  $ad_process=get_admission_process();
+  $students=null;
+  if(isset($_GET['admission_process_id']))
+    $students=admit_students($_GET['admission_process_id']);
+  ?>
+--><!DOCTYPE html>
 <html>
   <head>
     <!--Import Google Icon Font-->
@@ -13,7 +21,7 @@
     <script type="text/javascript" src="js/main.js"></script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahyadri Boys Hostel :: GCOEA Hostel</title>
+    <title>Result :: GCOEA Hostel</title>
   </head>
   <body>
     <div id="header" class="row">
@@ -37,8 +45,38 @@
       <div id="content-wrapper" class="container">
         <div class="row">
           <div id="content" class="col s8">
-            <h4>Sahyadri Boys Hostel</h4><?php print_message(); ?>
-            <p>Year of Establishment: 1981<br>Intake capacity: 180<br>Strength: 166</p>
+            <h4>Result</h4><?php print_message(); ?>
+            <form action="result.php" method="get">
+              <div class="row">
+                <div class="input-field col s6">
+                  <select id="admission_process_id" name="admission_process_id">
+                    <option value="" disabled selected>Choose your option</option><?php
+                     while($ap=mysqli_fetch_assoc($ad_process))
+                       echo "<option value=\"{$ap['id']}\">{$ap['academic_year']}</option>";
+                     ?>
+                  </select>
+                  <label for="admission_process_id">Academic year</label>
+                </div>
+                <div class="col s6"><br>
+                  <button type="submit" name="submit" class="btn waves-effect waves-light">Get result</button>
+                </div>
+              </div>
+            </form><?php
+              if((!isset($_GET['admission_process_id']))||$students==NULL||($students!=NULL&&mysqli_num_rows($students)<1)) 
+                echo "<h3>Results not available yet!</h3>";
+              else{
+                echo '<table class="striped"><thead><tr><th>Rank</th><th>College Id</th><th>Full name</th><th>Year</th><th>Alloted</th><th>Quota</th></tr></thead><tbody>';
+              while($s=mysqli_fetch_assoc($students)){
+                $alloted="<span style=\"color: #800;\">No</span>";
+                if($s['is_alloted']==1){
+                  $alloted="<span style=\"color: #0a0;\">Yes</span>";
+               }
+                echo "<tr><td>{$s['rank']}</td><td>{$s['college_id']}</td><td>{$s['fname']} {$s['mname']} {$s['lname']}</td><td>{$s['year']}</td><td>{$alloted}</td><td>{$s['alloted_under_quota']}</td></tr>";
+              }
+              }
+              if(isset($_GET['admission_process_id'])&&mysqli_num_rows($students)>=1)
+                echo "</tbody></table>";
+            ?>
           </div>
           <div id="right-sidebar" class="col s4">
             <ul class="collection with-header">
