@@ -150,4 +150,15 @@ function reset_admission($admission_process_id){
   mysqli_query($conn,$query3);
 }
 
+function public_result($admission_process_id){
+  global $conn;
+  $query0="select * from tbl_admission_process where id={$admission_process_id} and result=0";
+  $result0=mysqli_query($conn,$query0);
+  if(mysqli_num_rows($result0)==1){
+    return false;
+  }
+  $order_query="select tbl_students.id, college_id, token, fname, mname, lname, gender, exam_curr, exam_last, dob, rank, is_alloted, year, alloted_under_quota from tbl_tokens inner join tbl_students on tbl_tokens.student_id=tbl_students.id inner join tbl_branches on tbl_branches.id=tbl_students.branch_id inner join tbl_categories on tbl_categories.id=tbl_students.category where admission_process_id={$admission_process_id} and student_id is not null and is_valid=1 order by year, gender, rank";
+  $result=mysqli_query($conn,$order_query);
+  return $result;
+}
 ?>

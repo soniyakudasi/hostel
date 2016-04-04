@@ -4,7 +4,7 @@
   $ad_process=get_admission_process();
   $students=null;
   if(isset($_GET['admission_process_id']))
-    $students=admit_students($_GET['admission_process_id']);
+    $students=public_result($_GET['admission_process_id']);
   ?>
 --><!DOCTYPE html>
 <html>
@@ -74,7 +74,7 @@
                 echo "<tr><td>{$s['rank']}</td><td>{$s['college_id']}</td><td>{$s['fname']} {$s['mname']} {$s['lname']}</td><td>{$s['year']}</td><td>{$alloted}</td><td>{$s['alloted_under_quota']}</td></tr>";
               }
               }
-              if(isset($_GET['admission_process_id'])&&mysqli_num_rows($students)>=1)
+              if(isset($_GET['admission_process_id'])&&($students&&mysqli_num_rows($students)>=1))
                 echo "</tbody></table>";
             ?>
           </div>
